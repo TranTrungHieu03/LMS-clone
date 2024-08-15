@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order Confirmation</title>
+</head>
+<body>
+<div class="container" style="max-width: 600px; height: 100vh; margin: 0 auto">
+    <div class="message-sn">
+        <h1>
+            Your Elearning order is confirmed!
+        </h1>
+        <p>And we're just as excited as you are</p>
+    </div>
+    <br>
+    <div class="course-info">
+        <h4>Here's what you ordered:</h4>
+        <table style="border-bottom: 1px solid ">
+            <tr>
+                <td>
+                    Order #: <%= order._id%>
+                </td>
+                <td>
+                    Order Date: <%= order.date%>
+                </td>
+            </tr>
+        </table>
+        <table style="width: 90%; margin: auto; display: block">
+            <tr>
+                <td class="">Item</td>
+                <td>Qty</td>
+                <td>Cost</td>
+            </tr>
+        </table>
+        <table style="width: 90%; margin: auto; display: block">
+            <tr>
+                <td class=""><%= order.name%></td>
+                <td>1</td>
+                <td>$<%= order.price%></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

@@ -1,9 +1,9 @@
 import express from "express"
 import {
     addAnswer,
-    addQuestion,
+    addQuestion, addReplyToReview, addReview, deleteCourse,
     editCourse,
-    getAllCourse,
+    getAllCourse, getAllCourses,
     getCourseByUser,
     getSingleCourse,
     uploadCourse
@@ -24,4 +24,12 @@ router.get("/get-course-content/:id", isAuthenticated, getCourseByUser)
 router.put("/add-question", isAuthenticated, addQuestion)
 
 router.put("/add-answer", isAuthenticated, addAnswer)
+
+router.put("/add-review/:id", isAuthenticated, addReview)
+
+router.put("/add-reply", isAuthenticated, authorizeRoles("admin"), addReplyToReview)
+
+router.delete("/delete-course/:id", isAuthenticated, authorizeRoles("admin"), deleteCourse)
+
+
 export default router;
