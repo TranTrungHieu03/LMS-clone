@@ -13,7 +13,7 @@ import {useSelector} from "react-redux";
 import Image from "next/image";
 import avatar from "@/public/avatar.png"
 import {useSession} from "next-auth/react";
-import {useSocialAuthMutation} from "@/redux/features/auth/authApi";
+import {useLogoutQuery, useSocialAuthMutation} from "@/redux/features/auth/authApi";
 import {toast} from "react-hot-toast";
 
 type Props = {
@@ -30,7 +30,12 @@ const Header: FC<Props> = ({activeItem, setOpen, open, route, setRoute}) => {
     const {user} = useSelector((state: any) => state.auth)
     const {data} = useSession()
     const [socialAuth, {isSuccess, error}] = useSocialAuthMutation()
-    
+    const [logout, setLogout] = useState(false)
+    const {} = useLogoutQuery(
+        undefined, {
+            skip: !logout
+        }
+    )
     if (typeof window !== "undefined") {
         window.addEventListener("scroll", () => {
             if (window.scrollY > 80) {
@@ -51,16 +56,20 @@ const Header: FC<Props> = ({activeItem, setOpen, open, route, setRoute}) => {
                 })
             }
         }
-        if (isSuccess){
-            toast.success("Logged in successfully!")
+        if (data === null) {
+            if (isSuccess) {
+                toast.success("Logged in successfully!")
+            }
         }
-    }, [data, user])
+        if (data === null) {
+            setLogout(true)
+        }
+    }, [data, isSuccess, socialAuth, user])
     const handleClose = (e: any) => {
         if (e.target.id === "screen") {
             setOpenSidebar(false)
         }
     }
-    
     
     return (
         <div className={'w-full relative'}>
@@ -88,8 +97,10 @@ const Header: FC<Props> = ({activeItem, setOpen, open, route, setRoute}) => {
                                 user ? (
                                         <>
                                             <Link href={"/profile"}>
-                                                <Image src={user.avatar ?? avatar} alt={""}
-                                                       className={"w-[30px] h-[30px] rounded"}/>
+                                                <Image src={user.avatar ? user.avatar.url : avatar} alt={""}
+                                                       className={"w-[30px] h-[30px] rounded-full cursor-pointer"}
+                                                       style={{border: activeItem === 5 ? "2px solid #37a39a" : "none"}}
+                                                       width={30} height={30}/>
                                             </Link>
                                         
                                         </>

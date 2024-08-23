@@ -21,7 +21,7 @@ export default function RootLayout({
     children: ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning={true}>
         <body
             className={`${nunito.variable} !bg-white bg-no-repeat dark:bg-gradient-to-b dark:from-gray-900 dark:to-black duration-300`}>
         <Providers>
@@ -45,7 +45,7 @@ const Custom: FC<{ children: ReactNode }> = ({children}) => {
     return (
         <>
             {
-                isLoading ? <Loader/> : <>{children}</>
+                isLoading ? <Loader/> : children
             }
         </>
     )
