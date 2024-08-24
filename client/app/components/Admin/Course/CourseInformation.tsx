@@ -137,7 +137,7 @@ const CourseInformation: FC<Props> = ({active, setCourseInfo, courseInfo, setAct
                             <label className={`${styles.label}`}>Demo Url </label>
                             <input
                                 name={""}
-                                type={"url"}
+                                type={"text"}
                                 required={true}
                                 value={courseInfo.demoUrl}
                                 id={"demoUrl"}
